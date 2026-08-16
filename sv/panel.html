@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ServerColab — Panel del servidor</title>
+<link rel="icon" href="../img/logo.png">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/panel.css">
+<link rel="stylesheet" href="../css/sv-panel.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__left">
+    <button class="hamburger" id="mobileSidebarToggle"></button>
+    <a href="../panel.html" class="back-link" id="backLink"></a>
+    <div class="brand">
+      <img src="../img/logo.png" alt="ServerColab" class="brand__logo" onerror="this.style.opacity=0">
+      <span class="brand__name">Server<span>Colab</span></span>
+    </div>
+  </div>
+  <div class="topbar__right">
+    <button class="btn btn-outline btn-sm" id="collapseSidebarBtn"></button>
+    <button class="avatar-btn" id="avatarBtn" title="Cuenta"></button>
+  </div>
+</header>
+
+<div class="app-shell">
+
+  <aside class="sidebar" id="sidebar">
+    <div>
+      <div class="sv-sidebar__server" id="svSidebarServer"></div>
+      <nav class="sidebar__nav">
+        <button class="sidebar__link active" data-view="inicio"></button>
+        <button class="sidebar__link" data-view="consola"></button>
+        <button class="sidebar__link" data-view="archivos"></button>
+        <button class="sidebar__link" data-view="mundo"></button>
+        <button class="sidebar__link" data-view="complementos"></button>
+        <button class="sidebar__link" data-view="configuracion"></button>
+      </nav>
+    </div>
+    <button class="sidebar__link sidebar__logout" id="logoutBtn" data-label="Cerrar sesión"></button>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
+
+  <main class="main">
+
+    <div class="sv-head">
+      <div class="sv-head__info">
+        <img class="sv-head__logo" id="svLogo" src="" alt="">
+        <div>
+          <h1 id="svName"></h1>
+          <div class="sv-head__slug" id="svSlug"></div>
+        </div>
+      </div>
+      <div class="sv-head__actions">
+        <span class="badge" id="svStatusBadge"></span>
+        <button class="btn btn-primary" id="powerBtn"></button>
+      </div>
+    </div>
+
+    <div class="sv-connect">
+      <div class="sv-connect__item">
+        <span class="sv-connect__label">Dirección IP</span>
+        <div class="sv-connect__value" id="svIp"></div>
+      </div>
+      <div class="sv-connect__item">
+        <span class="sv-connect__label">Puerto</span>
+        <div class="sv-connect__value" id="svPort"></div>
+      </div>
+      <button class="btn btn-outline btn-sm" id="copyIpBtn"></button>
+    </div>
+
+    <section class="sv-view" data-view-panel="inicio">
+      <div class="sv-grid">
+        <div class="sv-card">
+          <span class="sv-card__label">RAM asignada</span>
+          <span class="sv-card__value" id="ovRam"></span>
+        </div>
+        <div class="sv-card">
+          <span class="sv-card__label">Jugadores</span>
+          <span class="sv-card__value" id="ovPlayers"></span>
+        </div>
+        <div class="sv-card">
+          <span class="sv-card__label">Edición / Core</span>
+          <span class="sv-card__value" id="ovCore"></span>
+        </div>
+        <div class="sv-card">
+          <span class="sv-card__label">Versión Minecraft</span>
+          <span class="sv-card__value" id="ovVersion"></span>
+        </div>
+      </div>
+      <div class="sv-panelbox">
+        <h3>Almacenamiento en Google Drive</h3>
+        <div class="storage-strip__bar"><div class="storage-strip__fill" id="ovStorageFill" style="width:0%"></div></div>
+        <p class="field-hint" id="ovStorageText"></p>
+      </div>
+      <div class="sv-panelbox">
+        <h3>Notebook enlazado</h3>
+        <p class="field-hint" id="ovNotebookPath"></p>
+      </div>
+    </section>
+
+    <section class="sv-view" data-view-panel="consola" hidden>
+      <div class="console-box">
+        <div class="console-log" id="consoleLog"></div>
+        <form class="console-input" id="consoleForm">
+          <span>&gt;</span>
+          <input type="text" id="consoleCmd" placeholder="Escribe un comando y presiona Enter" autocomplete="off">
+        </form>
+      </div>
+    </section>
+
+    <section class="sv-view" data-view-panel="archivos" hidden>
+      <div class="files-layout">
+        <div class="files-tree" id="filesTree"></div>
+        <div class="files-list">
+          <div class="files-list__head">
+            <span id="filesCurrentFolder">/mods</span>
+            <button class="btn btn-outline btn-sm" id="uploadFileBtn"></button>
+          </div>
+          <div id="filesListBody"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sv-view" data-view-panel="mundo" hidden>
+      <div class="sv-grid">
+        <div class="sv-card">
+          <span class="sv-card__label">Nombre del mundo</span>
+          <span class="sv-card__value" id="worldName">world</span>
+        </div>
+        <div class="sv-card">
+          <span class="sv-card__label">Semilla</span>
+          <span class="sv-card__value" id="worldSeed">-4821093746</span>
+        </div>
+        <div class="sv-card">
+          <span class="sv-card__label">Tamaño en disco</span>
+          <span class="sv-card__value" id="worldSize">840 MB</span>
+        </div>
+        <div class="sv-card">
+          <span class="sv-card__label">Última copia de seguridad</span>
+          <span class="sv-card__value" id="worldBackup">Sin copias aún</span>
+        </div>
+      </div>
+      <div class="sv-actions-row">
+        <button class="btn btn-outline" id="backupWorldBtn">Crear copia de seguridad</button>
+        <button class="btn btn-outline" id="downloadWorldBtn">Descargar mundo</button>
+        <button class="btn btn-danger" id="resetWorldBtn">Reiniciar mundo</button>
+      </div>
+    </section>
+
+    <section class="sv-view" data-view-panel="complementos" hidden>
+      <div class="sv-panelbox">
+        <div class="files-list__head">
+          <span id="pluginsTitle">Mods / Plugins instalados</span>
+          <button class="btn btn-outline btn-sm" id="addPluginBtn"></button>
+        </div>
+        <div id="pluginsList"></div>
+      </div>
+    </section>
+
+    <section class="sv-view" data-view-panel="configuracion" hidden>
+      <form id="configForm">
+        <div class="sv-panelbox">
+          <h3>server.properties</h3>
+          <div class="config-row">
+            <div>
+              <strong>Modo en línea (online-mode)</strong>
+              <p class="field-hint">Desactívalo para aceptar clientes no premium (crackeados).</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="cfgOnlineMode">
+              <span></span>
+            </label>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="cfgViewDistance">view-distance</label>
+              <input type="number" id="cfgViewDistance" min="3" max="32">
+            </div>
+            <div class="field">
+              <label for="cfgSimDistance">simulation-distance</label>
+              <input type="number" id="cfgSimDistance" min="3" max="32">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="cfgMaxPlayers">max-players</label>
+              <input type="number" id="cfgMaxPlayers" min="1" max="200">
+            </div>
+            <div class="field">
+              <label for="cfgDifficulty">difficulty</label>
+              <select id="cfgDifficulty">
+                <option value="peaceful">peaceful</option>
+                <option value="easy">easy</option>
+                <option value="normal">normal</option>
+                <option value="hard">hard</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Guardar configuración</button>
+        </div>
+      </form>
+
+      <div class="sv-panelbox danger-zone">
+        <h3>Zona de peligro</h3>
+        <p class="field-hint">Eliminar este servidor borra su configuración de ServerColab. Los archivos permanecen en tu Google Drive.</p>
+        <button class="btn btn-danger" id="deleteServerBtn">Eliminar servidor</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="../js/config.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/sv-panel.js"></script>
+</body>
+</html>
