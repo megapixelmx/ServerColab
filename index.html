@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ServerColab — Inicia sesión</title>
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+<div class="auth-page">
+
+  <div class="auth-side">
+    <div class="brand">
+      <img src="img/logo.png" alt="ServerColab" class="brand__logo" onerror="this.style.opacity=0">
+      <span class="brand__name">Server<span>Colab</span></span>
+    </div>
+    <div class="auth-side__content">
+      <h1>Tu servidor de Minecraft, corriendo en la nube en minutos.</h1>
+      <p>ServerColab conecta tu cuenta de Google Drive con Google Colab para alojar servidores Java o Bedrock, con mods, plugins y un túnel Playit.gg listo para tus jugadores.</p>
+      <ul class="auth-side__list">
+        <li><span class="dot pulse" style="color:var(--accent)"></span> Hasta 12 GB de RAM por sesión de Colab</li>
+        <li><span class="dot" style="color:var(--blue)"></span> Almacenamiento persistente en tu Drive</li>
+        <li><span class="dot" style="color:var(--amber)"></span> Panel de administración estilo Aternos</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="auth-form-wrap">
+    <div class="auth-card">
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Iniciar sesión</button>
+        <button class="auth-tab" data-tab="register">Registrarse</button>
+      </div>
+
+      <form id="loginForm" class="auth-form" novalidate>
+        <div class="field">
+          <label for="loginUser">Nombre de Usuario o Correo</label>
+          <input type="text" id="loginUser" placeholder="tu_usuario" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="loginPass">Contraseña</label>
+          <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+        <p class="field-hint error" id="loginError" hidden></p>
+        <button type="submit" class="btn btn-primary btn-block">Iniciar sesión</button>
+        <div class="auth-divider"><span>o</span></div>
+        <button type="button" class="btn btn-outline btn-block" id="googleLoginBtn">
+          <span class="google-icon-wrap"></span>
+          Iniciar con Google
+        </button>
+      </form>
+
+      <form id="registerForm" class="auth-form" novalidate hidden>
+        <div class="field">
+          <label for="regUser">Nombre de Usuario</label>
+          <input type="text" id="regUser" placeholder="tu_usuario" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="regPass">Contraseña</label>
+          <input type="password" id="regPass" placeholder="Mínimo 6 caracteres" autocomplete="new-password" required>
+        </div>
+        <div class="field">
+          <label for="regPass2">Confirmar Contraseña</label>
+          <input type="password" id="regPass2" placeholder="Repite tu contraseña" autocomplete="new-password" required>
+        </div>
+        <p class="field-hint error" id="registerError" hidden></p>
+        <button type="submit" class="btn btn-primary btn-block">Crear cuenta</button>
+        <div class="auth-divider"><span>o</span></div>
+        <button type="button" class="btn btn-outline btn-block" id="googleRegisterBtn">
+          <span class="google-icon-wrap"></span>
+          Registrarse con Google
+        </button>
+      </form>
+
+      <p class="auth-legal">Al continuar aceptas que ServerColab solicite acceso a tu Google Drive y a Google Colab para crear, leer y ejecutar los cuadernos de tus servidores.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="permissionsModal" hidden>
+  <div class="modal">
+    <div class="modal__head">
+      <span class="modal__title">Permisos de Google necesarios</span>
+      <button class="modal__close" id="closePermissionsModal">✕</button>
+    </div>
+    <p class="perm-text">Para crear y administrar servidores, ServerColab necesita conectarse a tu cuenta de Google:</p>
+    <div class="perm-list">
+      <div class="perm-item">
+        <span class="perm-icon"></span>
+        <div>
+          <strong>Google Drive</strong>
+          <p>Leer, subir y editar los archivos del servidor (mundo, mods, plugins, server.properties).</p>
+        </div>
+      </div>
+      <div class="perm-item">
+        <span class="perm-icon"></span>
+        <div>
+          <strong>Google Colab</strong>
+          <p>Abrir y ejecutar el cuaderno server/create/0_3_5_MineColab_improved.ipynb en tu nombre.</p>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-block" id="grantPermissionsBtn">Continuar con Google</button>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>
